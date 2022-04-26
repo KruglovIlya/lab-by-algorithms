@@ -20,13 +20,17 @@ class Person {
         this.outTime = value;
     }
 
+    Date getOutTime() {
+        return outTime;
+    }
+
     long getSubWithInsertAndOutTime() {
         return outTime.getTime() - insertTime.getTime();
     }
 }
 
 public class MyQueue {
-    private final Date initTime = new Date();
+    public final Date initTime = new Date();
     private final Date currentTimeInsert = (Date) initTime.clone();
     private final Date currentTimeOut = (Date) initTime.clone();
 
