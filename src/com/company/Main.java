@@ -22,8 +22,10 @@ public class Main {
         return min + rnd.nextInt(max - min + 1);
     }
 
-    public static void lab_2() {
+    public static long lab_2() {
         MyQueue myQueue = new MyQueue();
+        long fullTime = 0;
+
         for (int epoch = 0; epoch < 10; epoch++) {
             long timeSum = 0;
 
@@ -42,17 +44,22 @@ public class Main {
 
             Date finalTimeAbsolute = myQueue.pollPerson(getRandomNumber(120, 300)).getOutTime();
 
+            fullTime += finalTimeAbsolute.getTime() - StartTimeAbsolute.getTime();
 
             System.out.println("Общее время очереди - " + TimeUnit.MILLISECONDS.toMinutes(finalTimeAbsolute.getTime() - StartTimeAbsolute.getTime()) + " минут");
             System.out.println("Суммарное время ожидания 100 посетителей - " + TimeUnit.MILLISECONDS.toMinutes(timeSum) + " минут");
             System.out.println("В среднем посетитель стоит в очереди - " + TimeUnit.MILLISECONDS.toMinutes(timeSum / 100) + " минут");
             System.out.println();
         }
+
+        return fullTime;
     }
 
-    public static void lab_2_part_2() {
+    public static long lab_2_part_2() {
         MyQueue myQueueOne = new MyQueue();
         MyQueue myQueueTwo = new MyQueue();
+
+        long fullTime = 0;
 
         for (int epoch = 0; epoch < 10; epoch++) {
             long timeSum = 0;
@@ -84,15 +91,21 @@ public class Main {
             if (finalTimeOne.getTime() > finalTimeTwo.getTime())
                 finalTimeAbsolute = finalTimeOne;
 
-            System.out.println("Общее время очереди - " + TimeUnit.MILLISECONDS.toMinutes(finalTimeAbsolute.getTime() - StartTimeAbsolute.getTime()) + " минут");
+            fullTime += finalTimeAbsolute.getTime() - StartTimeAbsolute.getTime();
+
+            System.out.println("Общее время очереди из 100 посетителей - " + TimeUnit.MILLISECONDS.toMinutes(finalTimeAbsolute.getTime() - StartTimeAbsolute.getTime()) + " минут");
             System.out.println("Суммарное время ожидания 100 посетителей - " + TimeUnit.MILLISECONDS.toMinutes(timeSum) + " минут");
             System.out.println("В среднем посетитель стоит в очереди - " + TimeUnit.MILLISECONDS.toMinutes(timeSum / 100) + " минут");
 
             System.out.println();
         }
+
+        return fullTime;
     }
 
     public static void main(String[] args) {
-        lab_2_part_2();
+        long time_1 = lab_2(), time_2 = lab_2_part_2();
+
+        System.out.printf("Добавление второй очереди сократило время обслуживания на %.2f процентов", (double) time_2 * 100 / time_1);
     }
 }
