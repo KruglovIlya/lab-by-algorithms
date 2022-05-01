@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static final Random rnd = new Random(System.currentTimeMillis());
 
+    static int getRandomNumber(int min, int max) {
+        return min + rnd.nextInt(max - min + 1);
+    }
+
     public static void lab_1() {
         System.out.println(Encrypting.CaesarEncrypt("testing message", 1));
 
@@ -16,10 +20,6 @@ public class Main {
         System.out.println(Encrypting.VizhinerEncrypt(myString.toUpperCase(), "KEY"));
         System.out.println(Encrypting.VizhinerDecrypt(Encrypting.VizhinerEncrypt(myString.toUpperCase(), "KEY"), "KEY"));
 
-    }
-
-    static int getRandomNumber(int min, int max) {
-        return min + rnd.nextInt(max - min + 1);
     }
 
     public static long lab_2() {
@@ -101,6 +101,10 @@ public class Main {
         }
 
         return fullTime;
+    }
+
+    public static void lab_3() {
+
     }
 
     public static void main(String[] args) {
