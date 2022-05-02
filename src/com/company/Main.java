@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -134,7 +135,21 @@ public class Main {
 
     }
 
+    public static void lab_4() {
+        SquareMatrix myMatrix = new SquareMatrix(48, 4, 1054);
+
+        myMatrix.printMatrix();
+
+        int[][] subMatrix = myMatrix.getSumForMiniSquare(6);
+
+        for (int[] item : subMatrix) {
+            System.out.println(Arrays.toString(item));
+        }
+
+        System.out.printf("Логарифмическая сложность алгоритма: n^%.2f\n", myMatrix.getAlgorithmComplexity());
+    }
+
     public static void main(String[] args) {
-        lab_3();
+        lab_4();
     }
 }
