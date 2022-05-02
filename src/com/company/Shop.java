@@ -6,34 +6,35 @@ import java.util.Objects;
 import static java.lang.System.*;
 
 public class Shop {
-    String Item;
-    double Price;
-    Date ArrivingDate;
-    int Count;
-    int Id;
+    private boolean IsDel = false;
+    private final String Item;
+    private final double Price;
+    private final Date ArrivingDate;
+    private final int Count;
+    private final int Id;
 
-    Shop Next;
+    private Shop Next;
 
-    Shop(String name, int price, Date arrivingDate, int count,  int id) {
+    Shop(String name, Date arrivingDate, int price, int count, int id) {
         Item = name;
         Price = price;
-        ArrivingDate = arrivingDate;
+        ArrivingDate = (Date) arrivingDate.clone();
         Count = count;
         Id = id;
     }
 
-    public Shop pushToStart(String name, int price, Date arrivingDate, int count, int id) {
-        Shop newItem = new Shop(name, price, arrivingDate, count, id);
+    public Shop pushToStart(String name, Date arrivingDate, int price, int count, int id) {
+        Shop newItem = new Shop(name, arrivingDate, price, count, id);
         newItem.Next = this;
 
         return newItem;
     }
 
-    public void pushToEnd(String name, int price, Date arrivingDate, int count, int id) {
+    public void pushToEnd(String name, Date arrivingDate, int price, int count, int id) {
         if (Next != null)
-            Next.pushToEnd(name, price, arrivingDate, count, id);
+            Next.pushToEnd(name, arrivingDate, price, count, id);
         else {
-            Next = new Shop(name, price, arrivingDate, count, id);
+            Next = new Shop(name, arrivingDate, price, count, id);
         }
     }
 
@@ -61,7 +62,7 @@ public class Shop {
                 Shop current = start;
 
                 while (current != null) {
-                    if (arrivingDate == current.ArrivingDate)
+                    if (arrivingDate.equals(current.ArrivingDate))
                         this.yield(current);
 
                     current = current.Next;
@@ -72,7 +73,7 @@ public class Shop {
 
     public Double getPriceByName(String name) {
         if (Objects.equals(Item, name))
-            return Price * Count * 0.13;
+            return Price * Count * 1.13;
         else if (Next != null)
             return Next.getPriceByName(name);
         else
@@ -80,9 +81,26 @@ public class Shop {
     }
 
     public void printItem() {
+        if (IsDel)
+            return;
+
         out.println("Название товара: " + Item + " Кол-во: " + Count + " Дата прибытия: " + ArrivingDate + " Цена: " + Price);
         out.println();
     }
 
-    /* Сделать удаление по Id */
+    public boolean delById(int id) {
+        if (Id == id && !IsDel) {
+            IsDel = true;
+            return true;
+
+        } else if (Next != null && Next.Id == id) {
+            Next = Next.Next;
+            return true;
+
+        } else if (Next != null)
+            return Next.delById(id);
+
+        else
+            return false;
+    }
 }

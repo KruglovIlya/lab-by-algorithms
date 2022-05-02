@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -104,12 +105,36 @@ public class Main {
     }
 
     public static void lab_3() {
+        Shop myShop = new Shop("Товар 1", new Date(2022, Calendar.APRIL, 20), 500, 10, 1);
+
+        myShop.pushToEnd("Товар 2", new Date(2022, Calendar.APRIL, 20), 700, 5, 2);
+
+        myShop = myShop.pushToStart("Товар 3", new Date(2022, Calendar.APRIL, 21), 400, 12, 3);
+        myShop = myShop.pushToStart("Товар 4", new Date(2022, Calendar.APRIL, 21), 400, 12, 4);
+
+        if (!myShop.delById(4))
+            System.out.println("Товар не был найден");
+
+        for (Shop product : myShop.getAllItems()) {
+            product.printItem();
+        }
+
+
+        System.out.println();
+        Double price = myShop.getPriceByName("Товар 1");
+
+        if (price != null)
+            System.out.printf("Полная стоимость партии Товар 1: %.2f р \n\n", price);
+        else
+            System.out.println("Товар не найден \n\n");
+
+        for (Shop product : myShop.getItemsByArrivingDate(new Date(2022, Calendar.APRIL, 20))) {
+            product.printItem();
+        }
 
     }
 
     public static void main(String[] args) {
-        long time_1 = lab_2(), time_2 = lab_2_part_2();
-
-        System.out.printf("Добавление второй очереди сократило время обслуживания на %.2f процентов", (double) time_2 * 100 / time_1);
+        lab_3();
     }
 }
